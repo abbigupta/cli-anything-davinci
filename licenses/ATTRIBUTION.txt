@@ -1,0 +1,5 @@
+cli_anything/davinci/utils/repl_skin.py is from HKUDS/CLI-Anything,
+cli-anything-plugin/repl_skin.py, revision 34f519533bc175d2fe287ab8316b0dd99bb9cc43.
+Source: https://github.com/HKUDS/CLI-Anything
+The upstream Apache License 2.0 is included in Apache-2.0.txt.
+The rest of this project's original code is licensed under MIT.

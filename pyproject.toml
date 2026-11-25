@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cli-anything-davinci"
+version = "0.1.0"
+description = "Control a running DaVinci Resolve session from the terminal."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT AND Apache-2.0"
+license-files = ["LICENSE", "licenses/*"]
+authors = [{name = "abbigupta"}]
+dependencies = ["click>=8.1,<9", "prompt-toolkit>=3,<4"]
+
+[project.urls]
+Source = "https://github.com/abbigupta/cli-anything-davinci"
+Issues = "https://github.com/abbigupta/cli-anything-davinci/issues"
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff", "build", "twine"]
+
+[project.scripts]
+cli-anything-davinci = "cli_anything.davinci.davinci_cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cli_anything.davinci*"]
+
+[tool.setuptools.package-data]
+"cli_anything.davinci" = ["skills/SKILL.md"]
+
+[tool.ruff]
+target-version = "py310"
+extend-exclude = ["repl_skin.py"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+markers = ["resolve: requires a running Resolve Studio instance with local scripting"]

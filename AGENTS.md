@@ -1,0 +1,1 @@
+Keep changes small and direct. Check Resolve calls against Blackmagic Design's scripting documentation. Run Ruff and pytest. The live suite uses a dedicated test library. Keep the canonical and packaged SKILL.md copies in sync.
