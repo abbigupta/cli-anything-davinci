@@ -1,0 +1,5 @@
+include AGENTS.md CHANGELOG.md CONTRIBUTING.md TEST.md UPSTREAM_PR.md
+recursive-include docs *.md
+recursive-include examples *.sh
+recursive-include skills SKILL.md
+recursive-include tests *.py
