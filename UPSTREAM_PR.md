@@ -33,15 +33,15 @@ Append the following object to `registry.json`’s top-level `clis` array. The e
 - [x] Discoverable canonical skill with YAML frontmatter and an identical wheel resource.
 - [x] Registry object contains the twelve required fields, the target product homepage and a raw skill URL.
 - [x] Project name, package name, console script, version and video category agree with the registry proposal.
-- [ ] Publish the standalone repository, tag and release.
-- [ ] Install using the exact remote install command and fetch the raw skill from a fresh environment. The public repository and raw URL returned HTTP 404 during local preparation.
+- [x] Published the standalone repository, tag, wheel and source distribution. [v0.1.0 release](https://github.com/abbigupta/cli-anything-davinci/releases/tag/v0.1.0)
+- [x] Installed v0.1.0 at `d8baedd` using the exact public Git install command in a fresh virtual environment. The console entry point and dependency check passed. The downloaded raw skill matched the installed and canonical copies byte for byte.
 - [ ] Submit the one-file PR. CLI-Hub reads the merged registry from main. Users can then run `cli-hub search davinci`, `cli-hub info davinci` and `cli-hub install davinci`.
 
 [Standalone requirements](https://github.com/HKUDS/CLI-Anything/blob/main/CONTRIBUTING.md) · [Registry](https://github.com/HKUDS/CLI-Anything/blob/main/registry.json) · [Upstream PR template](https://github.com/HKUDS/CLI-Anything/blob/main/.github/PULL_REQUEST_TEMPLATE.md) · [Issue #707](https://github.com/HKUDS/CLI-Anything/issues/707)
 
-## Publish the standalone release
+## Completed v0.1.0 publication
 
-Run from the independent checkout after approving publication. These are POSIX shell commands. The local repository already has the origin and annotated tag.
+The following commands are retained for reference. Continue at the registry PR section for the pending submission.
 
 ```sh
 git status --short
@@ -118,7 +118,7 @@ gh pr create --repo HKUDS/CLI-Anything --base main --head abbigupta:registry/dav
 
 ## Proposed pull request description
 
-Use this description once the public installation and raw skill checks above pass. Update the test results if a Studio or hosted CI run is available at submission time.
+The public installation and raw skill checks have passed. Update the live results if a Studio run is available at submission time.
 
 <!-- PR BODY START -->
 ## Description
@@ -141,5 +141,5 @@ Register the independent DaVinci Resolve CLI in the video category. The package 
 
 ## Test results
 
-Offline suite on macOS, Python 3.10, 3.11 and 3.14: 49 passed, 2 opt-in live tests skipped per interpreter. An explicit connection test against Resolve 21.2 Free failed because the SDK returned no external session. Live Studio editing and rendering remain unverified. [Test details](https://github.com/abbigupta/cli-anything-davinci/blob/main/TEST.md)
+Offline suite on macOS, Python 3.10, 3.11 and 3.14: 49 passed, 2 opt-in live tests skipped per interpreter. All six hosted CI jobs passed on macOS, Ubuntu and Windows across Python 3.10 and 3.14. Resolve 21.2 Free returned no external session. The live connection test failed and the editing fixture stopped during setup. Studio editing and rendering remain unverified. [CI run](https://github.com/abbigupta/cli-anything-davinci/actions/runs/45543237149). [Test details](https://github.com/abbigupta/cli-anything-davinci/blob/main/TEST.md)
 <!-- PR BODY END -->

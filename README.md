@@ -2,7 +2,7 @@
 
 Edit a running DaVinci Resolve project from a terminal or an agent. Import footage, assemble a timeline, apply a LUT or a DRX grade, and start a render through Blackmagic Design's Python scripting API.
 
-**v0.1.0 verification.** The offline suite passes on macOS. The local Resolve 21.2 Free build loads the SDK and returns no external session. Editing and rendering still need a live Studio run. [Test results and reproduction](TEST.md)
+**v0.1.0 verification.** The offline suite passes on macOS, Ubuntu and Windows. The local Resolve 21.2 Free build loads the SDK and returns no external session. Editing and rendering still need a live Studio run. [Test results and reproduction](TEST.md)
 
 ## Install and connect
 
@@ -13,7 +13,7 @@ Use 64-bit Python 3.10+ and a running DaVinci Resolve Studio installation. In Re
 python -m pip install -e ".[dev]"
 cli-anything-davinci doctor
 
-# From GitHub after publication
+# From GitHub
 pip install git+https://github.com/abbigupta/cli-anything-davinci.git
 ```
 

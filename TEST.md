@@ -13,14 +13,15 @@
 - macOS arm64, Python 3.10.22, 3.11.15 and 3.14.6. Default suite on each interpreter: **49 passed, 2 live tests skipped**.
 - Ruff lint and format checks passed. The canonical skill passed the skill frontmatter validator.
 - The installed macOS 21.2.0 Free application was running. The CLI found the vendor module and native library, identified the Lite bundle and returned **exit 3** because `scriptapp("Resolve")` returned no session.
-- Explicitly running `pytest --resolve tests/test_full_e2e.py::test_live_connection` produced **1 failed** at that connection check. The Studio project/edit/export/render test did not run. There is no live output verification on this machine.
-- Windows and Linux discovery conventions have offline test coverage. GitHub Actions defines the three-platform matrix. Hosted CI and live Windows/Linux results are pending publication.
+- The opt-in live run produced one failed connection test and one fixture setup error. Both stopped at SDK connection. The fixture never created its scratch project, so editing, export and rendering remain unverified.
+- All six hosted CI jobs passed on macOS, Ubuntu and Windows with Python 3.10 and 3.14. [GitHub Actions run](https://github.com/abbigupta/cli-anything-davinci/actions/runs/45543237149)
 
 ## Offline checks
 
-Activate the virtual environment so the tests can locate the installed console script.
+Run from the repository root. On a fresh checkout, create the virtual environment with `python3 -m venv .venv`. On Windows, activate it with `.\.venv\Scripts\Activate.ps1` in PowerShell.
 
 ```sh
+. .venv/bin/activate
 python -m pip install -e ".[dev]"
 ruff check .
 ruff format --check .
@@ -35,10 +36,9 @@ Use **Resolve Studio with Local external scripting**, an exclusive test session,
 
 ```sh
 . .venv/bin/activate
-export DAVINCI_TEST_LIBRARY='CLI Harness Tests'   # exact name of the selected library
-export DAVINCI_TEST_CODEC='ProRes422'             # any available mov video codec ID
-cli-anything-davinci doctor
-python -m pytest --resolve -m resolve -v
+export DAVINCI_TEST_LIBRARY='CLI Harness Tests'
+export DAVINCI_TEST_CODEC='ProRes422'
+cli-anything-davinci doctor && python -m pytest --resolve -m resolve -v
 ```
 
 In PowerShell set `$env:DAVINCI_TEST_LIBRARY = 'CLI Harness Tests'` and `$env:DAVINCI_TEST_CODEC` before running the same pytest command. Use `render codecs mov` in the scratch project to discover codec IDs. The fixture and rendered movie are in pytest's temporary directory. Tests that explicitly request the live backend fail if a prerequisite is missing.

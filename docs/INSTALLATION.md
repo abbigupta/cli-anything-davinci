@@ -12,7 +12,7 @@ python -m pip install git+https://github.com/abbigupta/cli-anything-davinci.git
 cli-anything-davinci --json doctor
 ```
 
-For a local checkout, replace the pip command with `python -m pip install -e ".[dev]"`. The Git URL becomes available after publication. The vendor module and native library come from the Resolve installer.
+For a local checkout, replace the pip command with `python -m pip install -e ".[dev]"`. The vendor module and native library come from the Resolve installer.
 
 ## SDK locations
 
