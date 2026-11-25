@@ -5,16 +5,18 @@ def test_render_setup(b, run, tmp_path):
     p = b.project
     p.GetRenderFormats.return_value = {"QuickTime": "mov"}
     p.GetRenderCodecs.return_value = {"ProRes": "ProRes422"}
-    p.GetRenderPresetList.return_value = [{"Name": "Archive"}]
+    p.GetRenderPresetList.return_value = ["Archive"]
     assert run("render", "formats") == {"QuickTime": "mov"}
     assert run("render", "codecs", "mov") == {"ProRes": "ProRes422"}
     p.GetRenderCodecs.assert_called_once_with("mov")
-    assert run("render", "presets") == [{"Name": "Archive"}]
+    assert run("render", "presets") == ["Archive"]
     run(
         "render",
         "configure",
         "--preset",
         "Archive",
+        "--mode",
+        "single",
         "--format",
         "mov",
         "--codec",
@@ -26,6 +28,7 @@ def test_render_setup(b, run, tmp_path):
         "--all-frames",
     )
     p.LoadRenderPreset.assert_called_once_with("Archive")
+    p.SetCurrentRenderMode.assert_called_once_with(1)
     p.SetCurrentRenderFormatAndCodec.assert_called_once_with("mov", "ProRes422")
     p.SetRenderSettings.assert_called_once_with(
         {"TargetDir": str(tmp_path), "CustomName": "Cut", "SelectAllFrames": True}
@@ -64,7 +67,7 @@ def test_jobs_use_string_ids_and_start_asynchronously(b, run):
     assert run("render", "start", "job-A")["started"] == ["job-A"]
     p.StartRendering.assert_called_once_with(["job-A"], False)
     run("render", "start", "--all")
-    p.StartRendering.assert_called_with()
+    p.StartRendering.assert_called_with(["job-A"], False)
     assert run("render", "status")["rendering"] is True
     assert run("render", "status", "job-A")["status"]["JobStatus"] == "Rendering"
 

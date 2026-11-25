@@ -138,6 +138,8 @@ def test_edit_export_render(scratch, tmp_path):
     edit(
         "render",
         "configure",
+        "--mode",
+        "single",
         "--format",
         "mov",
         "--codec",

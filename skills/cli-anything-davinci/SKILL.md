@@ -29,6 +29,6 @@ cli-anything-davinci --json project save
 
 Resolve's current project, timeline and media bin persist across processes. Creating or opening a project changes the active GUI context. Use media IDs from import or list when names repeat. Timeline item IDs from `timeline clips` identify the edited instance for clip and color commands. Track, timeline and node indexes start at 1. Marker offsets start at 0.
 
-Use an existing, fresh output directory. Inspect `render formats` and `render codecs FORMAT_ID` for this workstation. Pass their values to `render configure --format FORMAT_ID --codec CODEC_ID --directory DIR --name NAME --all-frames`. Capture `data.job_id` from `render queue`, call `render start JOB_ID`, then poll `render status JOB_ID` until `data.status.JobStatus` reaches a terminal state. Check the output file after completion.
+Use an existing, fresh output directory. Inspect `render formats` and `render codecs FORMAT_ID` for this workstation. Pass their values to `render configure --mode single --format FORMAT_ID --codec CODEC_ID --directory DIR --name NAME --all-frames`. Capture `data.job_id` from `render queue`, call `render start JOB_ID`, then poll `render status JOB_ID` until `data.status.JobStatus` reaches a terminal state. Check the output file after completion.
 
 `project close --yes` discards unsaved edits. `render cancel --yes` stops active renders for the project. `color grade --yes` replaces a graph. Batch import, append and render configuration can partly succeed. Inspect the error details and current Resolve state before retrying.

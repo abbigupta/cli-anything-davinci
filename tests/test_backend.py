@@ -85,4 +85,4 @@ def test_mac_app_bundle_discovery():
         Path("/Applications/DaVinci Resolve.app/Contents/Resources/Developer/Scripting")
         in scripts
     )
-    assert any("Resolve/DaVinci Resolve.app" in str(p) for p in libs)
+    assert any("Resolve/DaVinci Resolve.app" in p.as_posix() for p in libs)

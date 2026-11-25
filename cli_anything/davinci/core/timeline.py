@@ -186,8 +186,7 @@ def export(b: Backend, path: Path) -> dict:
     }
     if suffix not in formats:
         raise click.BadParameter("Use a .drt, .otio, .csv or .edl extension.")
-    keys = [formats[suffix]] + (["EXPORT_NONE"] if suffix == ".edl" else [])
-    args = [getattr(b.resolve, key, None) for key in keys]
+    args = [getattr(b.resolve, key, None) for key in (formats[suffix], "EXPORT_NONE")]
     if None in args:
         raise ResolveError(
             "unsupported", f"This Resolve build lacks an export constant for {suffix}."
@@ -207,7 +206,7 @@ def track() -> None:
 @click.pass_obj
 def add_track(b: Backend, kind: str) -> dict:
     """Append a track. Audio tracks use stereo."""
-    args = [{"audioType": "stereo"}] if kind == "audio" else []
+    args = ["stereo"] if kind == "audio" else []
     read(b.timeline, "AddTrack", kind, *args)
     return {"added": kind}
 

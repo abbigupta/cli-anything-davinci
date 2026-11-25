@@ -34,6 +34,11 @@ def presets(b: Backend) -> list:
 
 @render.command()
 @click.option("--preset", help="Load this Resolve render preset first.")
+@click.option(
+    "--mode",
+    type=click.Choice(["single", "individual"]),
+    help="Deliver one movie or individual clips.",
+)
 @click.option("--format", "format_id", help="Format ID from render formats.")
 @click.option("--codec", help="Codec ID from render codecs.")
 @click.option(
@@ -48,6 +53,7 @@ def presets(b: Backend) -> list:
 def configure(
     b: Backend,
     preset: str | None,
+    mode: str | None,
     format_id: str | None,
     codec: str | None,
     directory: Path | None,
@@ -57,7 +63,7 @@ def configure(
     """Apply a preset, format/codec pair and/or output settings."""
     if bool(format_id) != bool(codec):
         raise click.UsageError("Supply --format and --codec together.")
-    if not any([preset, format_id, directory, name, all_frames]):
+    if not any([preset, mode, format_id, directory, name, all_frames]):
         raise click.UsageError("Provide at least one render setting.")
     if name and (name in {".", ".."} or "/" in name or "\\" in name):
         raise click.BadParameter(
@@ -75,6 +81,9 @@ def configure(
         if preset:
             read(b.project, "LoadRenderPreset", preset)
             applied["preset"] = preset
+        if mode:
+            read(b.project, "SetCurrentRenderMode", int(mode == "single"))
+            applied["mode"] = mode
         if format_id:
             read(b.project, "SetCurrentRenderFormatAndCodec", format_id, codec)
             applied.update(format=format_id, codec=codec)
@@ -114,11 +123,9 @@ def start(b: Backend, job_ids: tuple[str, ...], all_jobs: bool) -> dict:
         raise ResolveError(
             "selection", "Queue is empty or a job ID is unknown. Inspect render status."
         )
-    if all_jobs:
-        read(b.project, "StartRendering")
-    else:
-        read(b.project, "StartRendering", list(job_ids), False)
-    return {"started": "all" if all_jobs else list(job_ids)}
+    selected = queued if all_jobs else list(job_ids)
+    read(b.project, "StartRendering", selected, False)
+    return {"started": selected}
 
 
 @render.command()

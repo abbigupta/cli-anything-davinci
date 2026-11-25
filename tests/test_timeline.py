@@ -77,6 +77,6 @@ def test_advanced_clip_and_tracks(b, run, item, tmp_path):
     run("color", "grade", "item-1", grade, "--yes", "--mode", 2)
     graph.ApplyGradeFromDRX.assert_called_once_with(str(grade), 2)
     run("timeline", "track", "add", "audio")
-    b.timeline.AddTrack.assert_called_once_with("audio", {"audioType": "stereo"})
+    b.timeline.AddTrack.assert_called_once_with("audio", "stereo")
     run("timeline", "track", "enable", "audio", 1, "off")
     b.timeline.SetTrackEnable.assert_called_once_with("audio", 1, False)
